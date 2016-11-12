@@ -51,9 +51,9 @@ module.exports = {
 		var elapsed = Date.now() - start_time;
 		var percentFxd = (ub/fsize*100).toFixed();
 		var percent = percentFxd < 100 ? percentFxd : 99;
-		var time = htime(((parseInt(elapsed*(fsize/ub-1)))/1000).toFixed());
+		var time = this.htime(((parseInt(elapsed*(fsize/ub-1)))/1000).toFixed());
 		if (ub < fsize){
-			this.updLn('UPL: '+hsize(ub)+'/'+hsize(fsize)+' ['+percent+'%] '+time);
+			this.updLn('UPL: '+this.hsize(ub)+'/'+this.hsize(fsize)+' ['+percent+'%] '+time);
 		}
 	},
 	parseWinCmdLineParam: function(p){
