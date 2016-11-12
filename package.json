@@ -1,6 +1,6 @@
 {
 	"name": "sei-helper",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"keywords": [ 
 		"util",
 		"utility"
@@ -8,7 +8,7 @@
 	"author": "Seiya Loveless <seiya-l@ya.ru>",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/seiya-nmp/sei-helper.git"
+		"url": "https://github.com/seiya-npm/sei-helper.git"
 	},
 	"license": "MIT",
 	"main": "sei-helper.js",
