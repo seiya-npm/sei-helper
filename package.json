@@ -1,0 +1,18 @@
+{
+	"name": "sei-helper",
+	"version": "1.0",
+	"keywords": [ 
+		"util",
+		"utility"
+	],
+	"author": "Seiya Loveless <seiya-l@ya.ru>",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/seiya-nmp/sei-helper.git"
+	},
+	"license": "MIT",
+	"main": "sei-helper.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	}
+}
