@@ -119,5 +119,21 @@ module.exports = {
 			secs = secs < 10 ? '0'+secs : secs;
 		}
 		return year+'-'+mnth+'-'+dtnp+(notime?'':' '+hour+':'+mins+':'+secs)+' '+'UTC';
+	},
+	exec: function(pname, fpath, pargs, spc) {
+		console.log('\n> "'+pname+'"'+(pargs?' '+pargs:'')+(spc?'\n':''));
+		require('child_process').execSync(fpath+(pargs?' '+pargs:''),{stdio:'inherit'});
+	},
+	validateNum: function (input, min, max) {
+		var num = +input;
+		return num >= min && num <= max && input === num.toString();
+	},
+	validateIpAndPort: function(input) {
+		var parts = input.split(':');
+		var ip = parts[0].split('.');
+		var port = parts[1];
+		return parts.length == 2 && ip.length == 4 && this.validateNum(port, 1, 65535) && ip.every(function(segment){
+			return this.validateNum(segment, 0, 255);
+		});
 	}
 };
