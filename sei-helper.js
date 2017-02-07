@@ -135,13 +135,5 @@ module.exports = {
 		return parts.length == 2 && ip.length == 4 && this.validateNum(port, 1, 65535) && ip.every(function(segment){
 			return this.validateNum(segment, 0, 255);
 		});
-	},
-	calcCrc32: function(file){
-		var hash,pad;
-		hash = crc(fs.readFileSync(file)).toString(16);
-		pad = '00000000';
-		hash = pad.substring(0, pad.length - hash.length) + hash;
-		hash = hash.toUpperCase();
-		return hash;
 	}
 };
