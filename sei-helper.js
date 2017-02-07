@@ -44,13 +44,14 @@ module.exports = {
 		s.write(text);
 		s.clearLine(1);
 	},
-	uplStatus: function(ub,fsize,start_time){
+	uplStatus: function(ub,fsize,start_time,tPf){
+		var txtPrefix = typeof tPf === 'string' ? tPf : 'UPL';
 		var elapsed = Date.now() - start_time;
 		var percentFxd = (ub/fsize*100).toFixed();
 		var percent = percentFxd < 100 ? percentFxd : 99;
 		var time = this.htime(((parseInt(elapsed*(fsize/ub-1)))/1000).toFixed());
 		if (ub < fsize){
-			this.updLn('UPL: '+this.hsize(ub)+'/'+this.hsize(fsize)+' ['+percent+'%] '+time);
+			this.updLn(txtPrefix+': '+this.hsize(ub)+'/'+this.hsize(fsize)+' ['+percent+'%] '+time);
 		}
 	},
 	parseWinCmdLineParam: function(p){
