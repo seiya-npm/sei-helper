@@ -1,11 +1,11 @@
 {
 	"name": "sei-helper",
-	"version": "1.1.7",
+	"version": "1.1.8",
 	"keywords": [ 
 		"util",
 		"utility"
 	],
-	"author": "Seiya Loveless <seiya-l@ya.ru>",
+	"author": "Seiya Loveless",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/seiya-npm/sei-helper.git"
