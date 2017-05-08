@@ -1,6 +1,7 @@
 {
 	"name": "sei-helper",
-	"version": "1.1.8",
+	"version": "1.1.9",
+	"description": "Simple module for private use.",
 	"keywords": [ 
 		"util",
 		"utility"
