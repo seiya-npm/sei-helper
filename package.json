@@ -1,15 +1,19 @@
 {
 	"name": "sei-helper",
-	"version": "1.2.0",
+	"version": "1.3.0",
 	"description": "Simple module for private use.",
 	"keywords": [ 
 		"util",
 		"utility"
 	],
 	"author": "Seiya Loveless",
+	"homepage": "https://github.com/seiya-npm/sei-helper#readme",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/seiya-npm/sei-helper.git"
+	},
+	"bugs": {
+		"url": "https://github.com/seiya-npm/sei-helper/issues"
 	},
 	"license": "MIT",
 	"main": "sei-helper.js",
