@@ -57,7 +57,7 @@ const uplStatus = (ub, fsize, start_time, tPf) => {
     const percent = percentFxd < 100 ? percentFxd : (fsize == ub ? 100 : 99);
     const time = htime(((parseInt(elapsed * (fsize / ub - 1))) / 1000).toFixed());
     if (ub < fsize) {
-        updLn(txtPrefix + ': ' + hsize(ub) + '/' + hsize(fsize) + ' [' + percent + '%] ' + time);
+        updLn(`${txtPrefix}: ${hsize(ub)}/${hsize(fsize)} [${percent}%] ${time}`);
     }
 }
 
@@ -128,7 +128,7 @@ const parseDate = (date, notime) => {
         secs = date.getUTCSeconds();
         secs = secs < 10 ? '0' + secs : secs;
     }
-    return year + '-' + mnth + '-' + dtnp + (notime ? '' : ' ' + hour + ':' + mins + ':' + secs) + ' ' + 'UTC';
+    return `${year}-${mnth}-${dtnp}` + (notime ?'':` ${hour}:${mins}:${secs}`) + ` UTC`;
 }
 
 const exec = (pname, fpath, pargs, spc) => {
@@ -183,7 +183,7 @@ const parseCookie = (data) => {
 
 // extra modules
 
-const question = require(`${__dirname}/question`));
+const question = require('./question');
 
 // export
 
