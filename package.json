@@ -1,6 +1,6 @@
 {
 	"name": "sei-helper",
-	"version": "1.4.1",
+	"version": "2.0.0",
 	"description": "Simple module for private use.",
 	"keywords": [ 
 		"util",
@@ -16,7 +16,7 @@
 		"url": "https://github.com/seiya-npm/sei-helper/issues"
 	},
 	"license": "MIT",
-	"main": "src/sei-helper.js",
+	"main": "src/main.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"
 	}
