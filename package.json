@@ -1,23 +1,23 @@
 {
-	"name": "sei-helper",
-	"version": "2.0.0",
-	"description": "Simple module for private use.",
-	"keywords": [ 
-		"util",
-		"utility"
-	],
-	"author": "Seiya Loveless",
-	"homepage": "https://github.com/seiya-npm/sei-helper#readme",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/seiya-npm/sei-helper.git"
-	},
-	"bugs": {
-		"url": "https://github.com/seiya-npm/sei-helper/issues"
-	},
-	"license": "MIT",
-	"main": "src/main.js",
-	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
-	}
+    "name": "sei-helper",
+    "version": "2.0.0",
+    "description": "Simple module for private use.",
+    "keywords": [ 
+        "util",
+        "utility"
+    ],
+    "author": "Seiya Loveless",
+    "homepage": "https://github.com/seiya-npm/sei-helper#readme",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/seiya-npm/sei-helper.git"
+    },
+    "bugs": {
+        "url": "https://github.com/seiya-npm/sei-helper/issues"
+    },
+    "license": "MIT",
+    "main": "src/main.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    }
 }
