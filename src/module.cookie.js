@@ -13,7 +13,7 @@ const parse = (data) => {
         let c = line.split('; ');
         let val = c.shift().split('=');
         res[val[0]] = {
-            value: val[1]
+            value: val.slice(1).join('=')
         };
         for (let f of c) {
             let param = f.split('=');

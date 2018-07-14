@@ -51,7 +51,7 @@ const updLn = (text) => {
 }
 
 const uplStatus = (ub, fsize, start_time, tPf) => {
-    const txtPrefix = typeof tPf === 'string' ? tPf : 'UPL';
+    const txtPrefix = typeof tPf === 'string' ? tPf : 'UL';
     const elapsed = Date.now() - start_time;
     const percentFxd = (ub / fsize * 100).toFixed();
     const percent = percentFxd < 100 ? percentFxd : (fsize == ub ? 100 : 99);
@@ -91,14 +91,14 @@ const parseWinCmdLineParam = (p) => {
 
 const cleanupFilename = (flnm) => {
     const fixingChar = '_';
-    const illegalRe = /[\/\?<>\\:\*\|":]/g; // Illegal Characters on constious Operating Systems: / ? < > \ : * | "
+    const illegalRe = /[\/\?<>\\:\*\|":]/g; // Illegal Characters on conscious Operating Systems: / ? < > \ : * | "
     const controlRe = /[\x00-\x1f\x80-\x9f]/g; // Unicode Control codes: C0 0x00-0x1f & C1 (0x80-0x9f)
     const reservedRe = /^\.+$/; // Reserved filenames on Unix-based systems (".", "..")
     const windowsReservedRe = /^(con|prn|aux|nul|com[0-9]|lpt[0-9])(\..*)?$/i;
     /*    Reserved filenames in Windows ("CON", "PRN", "AUX", "NUL", "COM1",
         "COM2", "COM3", "COM4", "COM5", "COM6", "COM7", "COM8", "COM9",
         "LPT1", "LPT2", "LPT3", "LPT4", "LPT5", "LPT6", "LPT7", "LPT8", and
-        "LPT9") case-insesitively and with or without filename extensions. */
+        "LPT9") case-insensitively and with or without filename extensions. */
     const windowsTrailingRe = /[\. ]+$/;
     flnm = flnm
         .replace(illegalRe, fixingChar)
@@ -154,6 +154,7 @@ const validateIpAndPort = (input) => {
 
 const cookie       = require('./module.cookie');
 const { question } = require('./module.question');
+const { request }  = require('./module.request');
 
 // export
 
@@ -172,5 +173,6 @@ module.exports = {
     validateIpAndPort, 
     // extra list
     cookie,
-    question
+    question,
+    request
 };
