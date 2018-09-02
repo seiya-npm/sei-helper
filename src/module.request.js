@@ -4,13 +4,13 @@ const request = options => new Promise(resolve => {
         const doReq = require('request');
         doReq(options, (err, res) => {
             if (err){
-                resolve({ "status": -1, err });
+                return resolve({ "status": -1, err });
             }
-            resolve({ "status": res.statusCode, res });
+            return resolve({ "status": res.statusCode, res });
         });
     }
     catch(err) {
-        resolve({ "status": -2, err });
+        return resolve({ "status": -2, err });
     }
 });
 

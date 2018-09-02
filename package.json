@@ -1,6 +1,6 @@
 {
     "name": "sei-helper",
-    "version": "2.1.0",
+    "version": "2.1.1",
     "description": "Simple module for private use.",
     "keywords": [ 
         "util",
@@ -19,5 +19,8 @@
     "main": "src/main.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "optionalDependencies": {
+        "request": "^2.88.0"
     }
 }
