@@ -161,7 +161,7 @@ const xhtml2js     = require('./module.xhtml2js');
 module.exports = {
     // main list
     numberFormat,
-    hsize,
+    formatSize,
     formatTime, 
     typeOfSN,
     updateLine,
