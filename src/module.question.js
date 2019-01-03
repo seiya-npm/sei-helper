@@ -12,6 +12,4 @@ const question = query => new Promise(resolve => {
     });
 });
 
-module.exports = {
-    question
-};
+module.exports = question;

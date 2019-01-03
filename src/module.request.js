@@ -14,6 +14,4 @@ const request = options => new Promise(resolve => {
     }
 });
 
-module.exports = {
-    request
-};
+module.exports = request;

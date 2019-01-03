@@ -16,7 +16,7 @@ const numberFormat = (number, decimals, decPoint, thousandsSep) => {
     ));
 }
 
-const hsize = (value, decimals) => {
+const formatSize = (value, decimals) => {
     const units = [[1, 'B'], [1024, 'KiB'], [1024 * 1024, 'MiB'], [1024 * 1024 * 1024, 'GiB']];
     for (let i = 0; i < units.length - 1; i++) {
         if (value < units[i + 1][0]) {
@@ -26,24 +26,28 @@ const hsize = (value, decimals) => {
     return numberFormat(value / units[units.length - 1][0], decimals) + units[units.length - 1][1];
 }
 
-const htime = (value) => {
-    const sec_num = parseInt(value, 10);
-    let days = Math.floor(sec_num / 86400);
-    let hours = Math.floor((sec_num % 86400) / 3600);
-    let minutes = Math.floor(((sec_num % 86400) % 3600) / 60);
-    let seconds = ((sec_num % 86400) % 3600) % 60;
-    days = days > 0 ? days + 'd' : '';
-    hours = hours > 0 || days !== '' ? (hours < 10 && days !== '' ? '0' + hours + 'h' : hours + 'h') : '';
-    minutes = minutes > 0 || hours !== '' ? (minutes < 10 && hours !== '' ? '0' + minutes + 'm' : minutes + 'm') : '';
-    seconds = minutes !== '' && seconds < 10 ? '0' + seconds + 's' : seconds + 's';
-    return (days + hours + minutes + seconds);
+const formatTime = (value) => {
+    const totalSecondes = parseInt(value, 10);
+    // count
+    let days    = Math.floor(totalSecondes / 86400);
+    let hours   = Math.floor((totalSecondes % 86400) / 3600);
+    let minutes = Math.floor(((totalSecondes % 86400) % 3600) / 60);
+    let seconds = totalSecondes % 60;
+    // strings
+    days    = days    > 0  ?  days + 'd' : '';
+    hours   = Boolean(days   ||hours) ?
+        days  + ((Boolean(days ||hours-9  ) ? '0' : '') + hours   + 'h') : '';
+    minutes = Boolean(minutes||hours) ?
+        hours + ((Boolean(hours||minutes-9) ? '0' : '') + minutes + 'm') : '';
+    seconds = minutes + (Boolean(minutes&&seconds-9) ? '0' : '') + seconds + 's';
+    return seconds;
 }
 
 const typeOfSN = (str) => {
     return typeof str == 'string' || typeof str == 'number' ? true : false;
 }
 
-const updLn = (text) => {
+const updateLine = (text) => {
     const s = process.stderr;
     s.cursorTo(0);
     s.write(text);
@@ -55,9 +59,9 @@ const uplStatus = (ub, fsize, start_time, tPf) => {
     const elapsed = Date.now() - start_time;
     const percentFxd = (ub / fsize * 100).toFixed();
     const percent = percentFxd < 100 ? percentFxd : (fsize == ub ? 100 : 99);
-    const time = htime(((parseInt(elapsed * (fsize / ub - 1))) / 1000).toFixed());
+    const time = formatTime(((parseInt(elapsed * (fsize / ub - 1))) / 1000).toFixed());
     if (ub < fsize) {
-        updLn(`${txtPrefix}: ${hsize(ub)}/${hsize(fsize)} [${percent}%] ${time}`);
+        updateLine(`${txtPrefix}: ${formatSize(ub)}/${formatSize(fsize)} [${percent}%] ${time}`);
     }
 }
 
@@ -109,31 +113,26 @@ const cleanupFilename = (flnm) => {
     return flnm;
 }
 
-const parseDate = (date, notime) => {
-    if (date === 0) {
-        return '0000-00-00 00:00:00 UTC';
+const dateString = (timestamp, noTimeStr) => {
+    let timeStr = '';
+    noTimeStr = Boolean(noTimeStr);
+    if (timestamp === 0) {
+        timeStr = noTimeStr ? '' : ' 00:00:00';
+        return `0000-00-00${timeStr} UTC`;
     }
-    date = new Date(date);
-    const year = date.getUTCFullYear();
-    let mnth = date.getUTCMonth() + 1;
-    mnth = mnth < 10 ? '0' + mnth : mnth;
-    let dtnp = date.getUTCDate();
-    dtnp = dtnp < 10 ? '0' + dtnp : dtnp;
-    let hour, mins, secs;
-    if (!notime) {
-        hour = date.getUTCHours();
-        hour = hour < 10 ? '0' + hour : hour;
-        mins = date.getUTCMinutes();
-        mins = mins < 10 ? '0' + mins : mins;
-        secs = date.getUTCSeconds();
-        secs = secs < 10 ? '0' + secs : secs;
+    const date = new Date(timestamp).toISOString()
+    const dateStr = date.substring(0, date.indexOf('T'));
+    if (!noTimeStr) {
+        timeStr = ' ' + date.substring(date.indexOf('T')+1, date.indexOf('.'));
     }
-    return `${year}-${mnth}-${dtnp}` + (notime ?'':` ${hour}:${mins}:${secs}`) + ` UTC`;
+    return `${dateStr}${timeStr} UTC`;
 }
 
 const exec = (pname, fpath, pargs, spc) => {
-    console.log('\n> "' + pname + '"' + (pargs ? ' ' + pargs : '') + (spc ? '\n' : ''));
-    require('child_process').execSync(fpath + (pargs ? ' ' + pargs : ''), { stdio: 'inherit' });
+    pargs = pargs ? ' ' + pargs : '';
+    spc   = Boolean(spc) ? '\n' : '';
+    console.log(`\n> "${pname}"${pargs}${spc}`);
+    require('child_process').execSync(fpath + pargs), { stdio: 'inherit' });
 }
 
 const validateNum = (input, min, max) => {
@@ -153,8 +152,9 @@ const validateIpAndPort = (input) => {
 // extra modules
 
 const cookie       = require('./module.cookie');
-const { question } = require('./module.question');
-const { request }  = require('./module.request');
+const question     = require('./module.question');
+const request      = require('./module.request');
+const xhtml2js     = require('./module.xhtml2js');
 
 // export
 
@@ -162,17 +162,19 @@ module.exports = {
     // main list
     numberFormat,
     hsize,
-    htime, 
+    formatTime, 
     typeOfSN,
-    updLn,
+    updateLine,
     uplStatus, 
     parseWinCmdLineParam,
     cleanupFilename,
-    parseDate, exec,
+    dateString,
+    exec,
     validateNum,
     validateIpAndPort, 
     // extra list
     cookie,
     question,
-    request
+    request,
+    xhtml2js
 };
