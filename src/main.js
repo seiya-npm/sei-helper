@@ -36,10 +36,10 @@ const formatTime = (value) => {
     // strings
     days    = days    > 0  ?  days + 'd' : '';
     hours   = Boolean(days   ||hours) ?
-        days  + ((Boolean(days ||hours-9  ) ? '0' : '') + hours   + 'h') : '';
+        days  + ((Boolean(days ||hours-9>0  ) ? '0' : '') + hours   + 'h') : '';
     minutes = Boolean(minutes||hours) ?
-        hours + ((Boolean(hours||minutes-9) ? '0' : '') + minutes + 'm') : '';
-    seconds = minutes + (Boolean(minutes&&seconds-9) ? '0' : '') + seconds + 's';
+        hours + ((Boolean(hours||minutes-9>0) ? '0' : '') + minutes + 'm') : '';
+    seconds = minutes + (Boolean(minutes&&seconds-9>0) ? '0' : '') + seconds + 's';
     return seconds;
 }
 
