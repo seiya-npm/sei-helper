@@ -153,6 +153,7 @@ const validateIpAndPort = (input) => {
 
 const cookie       = require('./module.cookie');
 const question     = require('./module.question');
+const ask          = require('./module.ask');
 const request      = require('./module.request');
 const xhtml2js     = require('./module.xhtml2js');
 
@@ -175,6 +176,7 @@ module.exports = {
     // extra list
     cookie,
     question,
+    ask,
     request,
     xhtml2js
 };
