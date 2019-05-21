@@ -71,23 +71,24 @@ const uplStatus = (sendedBytes, totalBytes, startTime, prefixText) => {
     }
 }
 
-const uplStatus2 = (prefixText, totalBytes, startTime, sendedBytes, prevTime, prevSendedBytes) => {
+const uplStatus2 = (
+        prefixText,
+        startTime, totalBytes, 
+        currentTime, sendedBytes, 
+        sendSpeed
+    ) => {
     prefixText = typeof prefixText === 'string' ? prefixText : '[SEND]';
-    const currentTime = Date.now();
     const elapsedTime = currentTime - startTime;
     const percentNumber = (sendedBytes / totalBytes * 100).toFixed();
     const percentString = percentNumber < 100 ? percentNumber : (totalBytes == sendedBytes ? 100 : 99);
     const timeLeft = formatTime(((parseInt(elapsedTime * (totalBytes / sendedBytes - 1))) / 1000).toFixed());
-    const currentSpeed = 
-        typeof prevTime === 'number' && typeof prevSendedBytes === 'number' && prevTime > 0 && prevSendedBytes > 0 ?
-        (sendedBytes - prevSendedBytes) / (currentTime - prevTime) : '';
     if (sendedBytes < totalBytes) {
         updateLine([
             prefixText,
             `${formatSize(sendedBytes)}/${formatSize(totalBytes)}`,
             `[${percentString}%]`,
             `${timeLeft}`,
-            `${currentSpeed}`,
+            `${sendSpeed}`,
         ].join(' '));
     }
 }
