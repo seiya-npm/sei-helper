@@ -54,14 +54,41 @@ const updateLine = (text) => {
     s.clearLine(1);
 }
 
-const uplStatus = (ub, fsize, start_time, tPf) => {
-    const txtPrefix = typeof tPf === 'string' ? tPf : 'UL';
-    const elapsed = Date.now() - start_time;
-    const percentFxd = (ub / fsize * 100).toFixed();
-    const percent = percentFxd < 100 ? percentFxd : (fsize == ub ? 100 : 99);
-    const time = formatTime(((parseInt(elapsed * (fsize / ub - 1))) / 1000).toFixed());
-    if (ub < fsize) {
-        updateLine(`${txtPrefix}: ${formatSize(ub)}/${formatSize(fsize)} [${percent}%] ${time}`);
+const uplStatus = (sendedBytes, totalBytes, startTime, prefixText) => {
+    prefixText = typeof prefixText === 'string' ? prefixText : '[SEND]';
+    const currentTime = Date.now();
+    const elapsedTime = currentTime - startTime;
+    const percentNumber = (sendedBytes / totalBytes * 100).toFixed();
+    const percentString = percentNumber < 100 ? percentNumber : (totalBytes == sendedBytes ? 100 : 99);
+    const timeLeft = formatTime(((parseInt(elapsedTime * (totalBytes / sendedBytes - 1))) / 1000).toFixed());
+    if (sendedBytes < totalBytes) {
+        updateLine([
+            prefixText,
+            `${formatSize(sendedBytes)}/${formatSize(totalBytes)}`,
+            `[${percentString}%]`,
+            `${timeLeft}`,
+        ].join(' '));
+    }
+}
+
+const uplStatus2 = (prefixText, totalBytes, startTime, sendedBytes, prevTime, prevSendedBytes) => {
+    prefixText = typeof prefixText === 'string' ? prefixText : '[SEND]';
+    const currentTime = Date.now();
+    const elapsedTime = currentTime - startTime;
+    const percentNumber = (sendedBytes / totalBytes * 100).toFixed();
+    const percentString = percentNumber < 100 ? percentNumber : (totalBytes == sendedBytes ? 100 : 99);
+    const timeLeft = formatTime(((parseInt(elapsedTime * (totalBytes / sendedBytes - 1))) / 1000).toFixed());
+    const currentSpeed = 
+        typeof prevTime === 'number' && typeof prevSendedBytes === 'number' && prevTime > 0 && prevSendedBytes > 0 ?
+        (sendedBytes - prevSendedBytes) / (currentTime - uplStatus.prevTime) ? '';
+    if (sendedBytes < totalBytes) {
+        updateLine([
+            prefixText,
+            `${formatSize(sendedBytes)}/${formatSize(totalBytes)}`,
+            `[${percentString}%]`,
+            `${timeLeft}`,
+            `${currentSpeed}`,
+        ].join(' '));
     }
 }
 
@@ -154,7 +181,6 @@ const validateIpAndPort = (input) => {
 const cookie       = require('./module.cookie');
 const question     = require('./module.question');
 const ask          = require('./module.ask');
-const request      = require('./module.request');
 const xhtml2js     = require('./module.xhtml2js');
 
 // export
@@ -163,10 +189,11 @@ module.exports = {
     // main list
     numberFormat,
     formatSize,
-    formatTime, 
+    formatTime,
     typeOfSN,
     updateLine,
-    uplStatus, 
+    uplStatus,
+    uplStatus2,
     parseWinCmdLineParam,
     cleanupFilename,
     dateString,
@@ -177,6 +204,5 @@ module.exports = {
     cookie,
     question,
     ask,
-    request,
     xhtml2js
 };
