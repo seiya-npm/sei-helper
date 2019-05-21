@@ -80,7 +80,7 @@ const uplStatus2 = (prefixText, totalBytes, startTime, sendedBytes, prevTime, pr
     const timeLeft = formatTime(((parseInt(elapsedTime * (totalBytes / sendedBytes - 1))) / 1000).toFixed());
     const currentSpeed = 
         typeof prevTime === 'number' && typeof prevSendedBytes === 'number' && prevTime > 0 && prevSendedBytes > 0 ?
-        (sendedBytes - prevSendedBytes) / (currentTime - uplStatus.prevTime) ? '';
+        (sendedBytes - prevSendedBytes) / (currentTime - uplStatus.prevTime) : '';
     if (sendedBytes < totalBytes) {
         updateLine([
             prefixText,
