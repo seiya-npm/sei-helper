@@ -93,6 +93,17 @@ const uplStatus2 = (
     }
 }
 
+const uplStatus2Speed = ( currentTime, sendedBytes, prevTime, prevBytes ) => {
+    if( typeof prevTime === 'number' && typeof prevBytes === 'number' && prevTime > 0 && prevBytes > 0){
+        return {
+            sendSpeed: formatSize(( sendedBytes - prevBytes ) / (currentTime - prevTime) * 1024) + '/s',
+            prevTime:  currentTime,
+            prevBytes: sendedBytes,
+        };
+    }
+    return { sendSpeed: '', prevTime: currentTime, prevBytes: sendedBytes };
+}
+
 const parseWinCmdLineParam = (p) => {
     let quote = false;
     let start = 0;
@@ -195,6 +206,7 @@ module.exports = {
     updateLine,
     uplStatus,
     uplStatus2,
+    uplStatus2Speed,
     parseWinCmdLineParam,
     cleanupFilename,
     dateString,
